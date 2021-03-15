@@ -1,0 +1,8 @@
+@import '~assets/scss/mixins';
+
+.container-fluid {
+  padding-top: 60px;
+  @include min-width-992 {
+    padding: 60px 20px 0;
+  }
+}
