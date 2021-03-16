@@ -1,0 +1,16 @@
+@import '~assets/scss/mixins';
+
+.form {
+  height: 100%;
+  padding-top: 40px;
+
+  @include min-width-992 {
+    padding-top: 80px;
+  }
+}
+
+.row .no-gutters {
+  .col-12 {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,45 @@
+@import '~assets/scss/mixins';
+@import '~assets/scss/colors';
+
+
+
+.btn-nav-toggle {
+  align-items: center;
+  color: $primary;
+  display: flex;
+  font-size: 20px;
+  height: 52px;
+  justify-content: center;
+  width: 40px;
+
+  @include min-width-992 {
+    display: none;
+  }
+}
+
+.navbar {
+  font-size: 14px;
+  min-height: 60px;
+}
+
+.navbar-brand {
+  align-items: center;
+  display: flex;
+  height: 52px;
+  justify-content: center;
+  padding: 0;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: $primary;
+  font-size: 13px;
+
+  &:hover {
+    color: $primary-dark;
+  }
+
+  &.active {
+    color: $primary-dark;
+    font-weight: bold;
+  }
+}

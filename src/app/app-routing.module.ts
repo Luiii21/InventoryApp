@@ -15,7 +15,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/control-panel/control-panel.module').then(m => m.ControlPanelModule)
   },
   {
-    path: 'busqueda-producto',
+    path: 'buscar-producto',
     loadChildren: () => import('./components/control-panel/control-panel.module').then(m => m.ControlPanelModule)
   }
 ];

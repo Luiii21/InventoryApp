@@ -4,5 +4,11 @@
   padding-top: 60px;
   @include min-width-992 {
     padding: 60px 20px 0;
+    min-height: 100vh;
+    height: 100vh;
+  }
+
+  @include for-min-width(1366px) {
+    max-width: 1366px;
   }
 }

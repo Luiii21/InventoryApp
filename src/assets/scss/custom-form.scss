@@ -1,0 +1,59 @@
+@import '~assets/scss/colors';
+@import '~assets/scss/mixins';
+
+.btn-primary-inv {
+  border-radius: 20px;
+  background-color: white;
+  border: 1px solid $primary;
+  color: $primary;
+  font-size: 14px;
+  max-height: 36px;
+  &.active, &:hover {
+    background-color: $secondary;
+    border: 1px solid $secondary;
+    color: white;
+  }
+}
+
+.custom-form {
+
+  .form-control {
+    border-radius: 15px;
+    height: 36px;
+    transition: all 0.5s ease;
+    padding-left: 10px;
+  }
+
+  .form-control::placeholder {
+    font-size: 14px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border: 1px solid $secondary;
+  }
+}
+
+.custom-select {
+  border-radius: 15px;
+  height: 36px;
+
+  &:focus {
+    box-shadow: none;
+    border: 1px solid $secondary;
+  }
+}
+
+.custom-col-label {
+  width: 100%;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+.custom-btn-group {
+  max-height: 36px;
+}
+
+.fit-content {
+  height: fit-content;
+}
