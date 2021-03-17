@@ -6,14 +6,16 @@ import {map} from 'rxjs/operators';
 
 
 // IMPORTS
-
+import {AngularFirestore} from 'angularfire2/firestore';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
+  private CARPETA_IMAGENES = 'img';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private db: AngularFirestore) {
   }
 
   // tslint:disable-next-line:typedef
@@ -25,5 +27,10 @@ export class ProductoService {
           return producto;
         })
       );
+  }
+
+  // tslint:disable-next-line:typedef
+  private saveImage(imagen: {nombre: string, url: string}) {
+    this.db.collection(`/${this.CARPETA_IMAGENES}`).add(imagen);
   }
 }
