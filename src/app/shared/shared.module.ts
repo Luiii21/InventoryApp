@@ -5,7 +5,8 @@ import {RouterModule} from '@angular/router';
 
 // IMPORTS
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import {HttpClientModule} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -16,7 +17,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ]
 })
 export class SharedModule {

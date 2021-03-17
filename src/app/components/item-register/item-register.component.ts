@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ProductoService} from '@app/services/producto.service';
+import {ProductoModel} from '@app/models/producto.model';
 
 @Component({
   selector: 'app-item-register',
@@ -9,7 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productoService: ProductoService) {
   }
 
   ngOnInit(): void {
@@ -26,12 +28,13 @@ export class ItemRegisterComponent implements OnInit {
         marca: [null, [Validators.required]],
         genero: [null, [Validators.required]],
         color: [null, [Validators.required]],
-        tamano: [null, [Validators.required]]
+        tamano: [null, [Validators.required]],
+        stock: [null, [Validators.required, Validators.min(1)]]
       }
     );
   }
 
-  registerProduct(): void {
-    console.log(this.Form.value);
+  saveProduct(): void {
+    this.productoService.registerProduct(this.Form.value).subscribe();
   }
 }

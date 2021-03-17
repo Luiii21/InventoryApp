@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  inventoryDB: 'https://inventarioapp-2f2a2-default-rtdb.firebaseio.com',
   production: false
 };
 
