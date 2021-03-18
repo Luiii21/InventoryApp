@@ -20,20 +20,25 @@ export class ProductoService {
   }
 
   // tslint:disable-next-line:typedef
-  registerProduct(producto: ProductoModel) {
-    return this.http.post(`${environment.inventoryDB}/productos.json`, producto)
+  registerProduct(product: ProductoModel) {
+    return this.http.post(`${environment.inventoryDB}/productos.json`, product)
       .pipe(
         map((resp: any) => {
-          producto.id = resp.name;
-          return producto;
+          product.id = resp.name;
+          return product;
         })
       );
   }
+  // tslint:disable-next-line:typedef
+  updateProduct(product: ProductoModel) {
+    const productID = product.id;
+    delete product.id;
+    return this.http.put(`${environment.inventoryDB}/productos/${productID}.json`, product);
+  }
 
-  uploadImage(image: ProductoFileModel, product: ProductoModel): void {
+  updateProductImage(image: ProductoFileModel, product: ProductoModel): void {
     const storageRef = firebase.storage().ref();
-    const uploadTask: firebase.storage.UploadTask =
-      storageRef.child(`${this.CARPETA_IMAGENES}/${image.nombreArchivo}`).put(image.archivo);
+    const uploadTask: firebase.storage.UploadTask = storageRef.child(`${this.CARPETA_IMAGENES}/${image.nombreArchivo}`).put(image.archivo);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
       }, (error) => {
@@ -42,16 +47,10 @@ export class ProductoService {
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((url) => {
           product.imagenUrl = url;
-          this.updateProduct(product).subscribe(resp => {});
+          this.updateProduct(product).subscribe();
         });
       });
   }
 
 
-  // tslint:disable-next-line:typedef
-  private updateProduct(product: ProductoModel) {
-    const productID = product.id;
-    delete product.id;
-    return this.http.put(`${environment.inventoryDB}/productos/${productID}.json`, product);
-  }
 }

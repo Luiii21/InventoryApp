@@ -44,10 +44,10 @@ export class ItemRegisterComponent implements OnInit {
       const newForm: ProductoModel = {...this.Form.value};
       newForm.precio = Number(newForm.precio);
       newForm.stock = Number(newForm.stock);
+      this.productoService.registerProduct(newForm).subscribe();
+      this.productoService.updateProductImage(this.productImage, newForm);
 
-      this.productoService.registerProduct(newForm).subscribe(resp => {
-        this.productoService.uploadImage(this.productImage, newForm);
-      });
+
       this.Form.reset();
       this.productImage = null;
       this.isLoading = false;
