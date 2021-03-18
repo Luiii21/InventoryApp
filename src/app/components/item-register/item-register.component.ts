@@ -66,9 +66,12 @@ export class ItemRegisterComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private extractFiles(imagesList: FileList) {
     const temporalFile = imagesList[0];
-    const newFile = new ProductoFileModel(temporalFile);
-    this.imagesFiles[0] = newFile;
-    this.productImage = newFile;
+
+    if (this.fileCanBeLoaded(temporalFile)) {
+      const newFile = new ProductoFileModel(temporalFile);
+      this.imagesFiles[0] = newFile;
+      this.productImage = newFile;
+    }
     console.log(this.productImage);
   }
 
@@ -89,7 +92,7 @@ export class ItemRegisterComponent implements OnInit {
   }
 
   private fileDropped(fileName: string): boolean {
-    if (this.imagesFiles[0].nombreArchivo === fileName) {
+    if (this.imagesFiles[0] && this.imagesFiles[0].nombreArchivo === fileName) {
       return true;
     }
     return false;

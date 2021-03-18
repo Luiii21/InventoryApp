@@ -98,23 +98,23 @@
         <input formControlName="tamano" type="text" class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
       <div class="col-12 col-lg-4 mt-3">
-        <button type="submit" class="btn btn-block btn-success border rounded-pill" [disabled]="!productImage || Form.invalid">
+        <button type="submit" class="btn btn-block btn-success border rounded-pill"
+                [disabled]="!productImage || Form.invalid">
           Guardar
         </button>
       </div>
     </form>
   </div>
   <div class="col-12 col-lg-4 form bg-light px-lg-3">
-    <h3 class="inv-text-secondary mb-3">Subir foto</h3>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-        </div>
-        <div class="custom-file">
-          <input type="file" (change)="fileChanges($event)" class="custom-file-input" id="inputGroupFile01"
-                 aria-describedby="subir imagen">
-          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-        </div>
+    <h3 class="inv-text-secondary mb-4">Subir foto</h3>
+    <div class="input-group d-flex justify-content-center my-4">
+      <div class="custom-file">
+        <img src="./assets/img/download-img.png" alt="download-img">
+        <input (change)="fileChanges($event)" type="file" class="custom-file-input" id="inputGroupFile01"
+               aria-describedby="inputGroupFileAddon01">
       </div>
+    </div>
+    <h6 class="text-center my-2" *ngIf="!productImage">Selecione imagen de producto</h6>
+    <h6 class="text-center my-2" *ngIf="productImage">{{'Imagen de producto: ' + productImage.nombreArchivo}}</h6>
   </div>
 </div>

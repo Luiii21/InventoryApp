@@ -21,3 +21,24 @@
   color: #666;
   text-align: center;
 }
+
+.custom-file {
+  position: relative;
+  max-width: 130px;
+  height: 150px;
+
+  input {
+    cursor: pointer;
+    width: 130px;
+    height: 150px;
+    opacity: 0;
+    position: absolute;
+    z-index: 9;
+    left: 0;
+  }
+
+  img, img:hover {
+    width: 130px;
+    height: 150px;
+  }
+}
