@@ -9,4 +9,9 @@ export class ProductoModel {
   color: string;
   tamano: string;
   stock: number;
+  imagenUrl: string;
+
+  constructor() {
+    this.imagenUrl = '';
+  }
 }

@@ -30,13 +30,28 @@ export class ProductoService {
       );
   }
 
-  // tslint:disable-next-line:typedef
-  private saveImage(imagen: { nombre: string, url: string }) {
-    this.db.collection(`/${this.CARPETA_IMAGENES}`).add(imagen);
+  uploadImage(image: ProductoFileModel, product: ProductoModel): void {
+    const storageRef = firebase.storage().ref();
+    const uploadTask: firebase.storage.UploadTask =
+      storageRef.child(`${this.CARPETA_IMAGENES}/${image.nombreArchivo}`).put(image.archivo);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+      }, (error) => {
+        console.log('Error al subir', error);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          product.imagenUrl = url;
+          this.updateProduct(product).subscribe(resp => {});
+        });
+      });
   }
 
+
   // tslint:disable-next-line:typedef
-  loadImage(images: ProductoFileModel[]) {
-    console.log(images);
+  private updateProduct(product: ProductoModel) {
+    const productID = product.id;
+    delete product.id;
+    return this.http.put(`${environment.inventoryDB}/productos/${productID}.json`, product);
   }
 }

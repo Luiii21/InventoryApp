@@ -13,8 +13,9 @@ export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
   imagesFiles: ProductoFileModel[] = [];
   productImage: ProductoFileModel = null;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private productoService: ProductoService) {
+  constructor(private fb: FormBuilder, private productoService: ProductoService) {
   }
 
   ngOnInit(): void {
@@ -39,21 +40,26 @@ export class ItemRegisterComponent implements OnInit {
 
   saveProduct(): void {
     if (this.Form.valid && this.productImage) {
+      this.isLoading = true;
       const newForm: ProductoModel = {...this.Form.value};
       newForm.precio = Number(newForm.precio);
       newForm.stock = Number(newForm.stock);
+
+      this.productoService.registerProduct(newForm).subscribe(resp => {
+        this.productoService.uploadImage(this.productImage, newForm);
+      });
+      this.Form.reset();
+      this.productImage = null;
+      this.isLoading = false;
     }
-    /* this.productoService.registerProduct(this.Form.value).subscribe();*/
   }
 
-
-  fileChanges(event): void {
+  loadImage(event): void {
     const transference = this.getTransference(event);
     if (!transference) {
       return;
     }
     this.extractFiles(transference.files);
-    this.preventStop(event);
   }
 
   // VALIDADORES DE IMAGENES
@@ -66,29 +72,20 @@ export class ItemRegisterComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private extractFiles(imagesList: FileList) {
     const temporalFile = imagesList[0];
-
     if (this.fileCanBeLoaded(temporalFile)) {
       const newFile = new ProductoFileModel(temporalFile);
       this.imagesFiles[0] = newFile;
       this.productImage = newFile;
     }
-    console.log(this.productImage);
   }
 
   // VALIDATORS
-
   private fileCanBeLoaded(document: File): boolean {
     if (!this.fileDropped(document.name) && this.isImage(document.type)) {
       return true;
     } else {
       return false;
     }
-  }
-
-  // tslint:disable-next-line:typedef
-  private preventStop(event) {
-    event.preventDefault();
-    event.stopPropagation();
   }
 
   private fileDropped(fileName: string): boolean {
