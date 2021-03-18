@@ -3,7 +3,8 @@ export class ProductoFileModel {
   public nombreArchivo: string;
   public url: string;
 
-  constructor( archivo: File) {
+  constructor(archivo: File) {
     this.archivo = archivo;
+    this.nombreArchivo = archivo.name;
   }
 }

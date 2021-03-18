@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 // IMPORTS
 import {AngularFirestore} from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import {ProductoFileModel} from '@app/models/productoFile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,12 @@ export class ProductoService {
   }
 
   // tslint:disable-next-line:typedef
-  private saveImage(imagen: {nombre: string, url: string}) {
+  private saveImage(imagen: { nombre: string, url: string }) {
     this.db.collection(`/${this.CARPETA_IMAGENES}`).add(imagen);
+  }
+
+  // tslint:disable-next-line:typedef
+  loadImage(images: ProductoFileModel[]) {
+    console.log(images);
   }
 }

@@ -104,7 +104,14 @@
       </div>
     </form>
   </div>
-  <div class="col-12 col-lg-4 side bg-light">
-    <h1>test 2</h1>
+  <div class="col-12 col-lg-4 form bg-light px-lg-3">
+    <h3 class="inv-text-secondary mb-3">Subir foto</h3>
+    <div appNgDropFiles [productFiles]="productFiles" (mouseOver)="isOverDrop = $event" [ngClass]="{'bg-info': isOverDrop}" class="row no-gutters drop-zone">
+      <img (click)="saveProduct()" class="mx-auto my-4" src="./assets/img/download-img.png" alt="download-img" height="150" width="130">
+    </div>
+    <div class="row no-gutters">
+      <h6 *ngIf="productFiles[0]">{{productFiles[0].nombreArchivo}}</h6>
+      <h6 *ngIf="!productFiles[0]" class="mx-auto my-2">Seleccione imagen</h6>
+    </div>
   </div>
 </div>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductoService} from '@app/services/producto.service';
 import {ProductoModel} from '@app/models/producto.model';
+import {ProductoFileModel} from '@app/models/productoFile.model';
 
 @Component({
   selector: 'app-item-register',
@@ -10,6 +11,8 @@ import {ProductoModel} from '@app/models/producto.model';
 })
 export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
+  productFiles: ProductoFileModel[] = [];
+  isOverDrop = false;
 
   constructor(private fb: FormBuilder, private productoService: ProductoService) {
   }
@@ -35,6 +38,19 @@ export class ItemRegisterComponent implements OnInit {
   }
 
   saveProduct(): void {
-    this.productoService.registerProduct(this.Form.value).subscribe();
+    if (this.Form.valid) {
+      const newForm: ProductoModel = {...this.Form.value};
+      newForm.precio = Number(newForm.precio);
+      newForm.stock = Number(newForm.stock);
+    }
+    /* this.productoService.registerProduct(this.Form.value).subscribe();*/
+  }
+
+  uploadImage(): void {
+    this.productoService.loadImage(this.productFiles);
+  }
+
+  test(event): void {
+    console.log(event);
   }
 }
