@@ -98,7 +98,7 @@
         <input formControlName="tamano" type="text" class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
       <div class="col-12 col-lg-4 mt-3">
-        <button type="submit" class="btn btn-block btn-success border rounded-pill">
+        <button type="submit" class="btn btn-block btn-success border rounded-pill" [disabled]="!productImage || Form.invalid">
           Guardar
         </button>
       </div>
@@ -106,12 +106,15 @@
   </div>
   <div class="col-12 col-lg-4 form bg-light px-lg-3">
     <h3 class="inv-text-secondary mb-3">Subir foto</h3>
-    <div appNgDropFiles [productFiles]="productFiles" (mouseOver)="isOverDrop = $event" [ngClass]="{'bg-info': isOverDrop}" class="row no-gutters drop-zone">
-      <img (click)="saveProduct()" class="mx-auto my-4" src="./assets/img/download-img.png" alt="download-img" height="150" width="130">
-    </div>
-    <div class="row no-gutters">
-      <h6 *ngIf="productFiles[0]">{{productFiles[0].nombreArchivo}}</h6>
-      <h6 *ngIf="!productFiles[0]" class="mx-auto my-2">Seleccione imagen</h6>
-    </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="fileChanges($event)" class="custom-file-input" id="inputGroupFile01"
+                 aria-describedby="subir imagen">
+          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div>
+      </div>
   </div>
 </div>

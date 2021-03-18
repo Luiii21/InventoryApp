@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductoService} from '@app/services/producto.service';
 import {ProductoModel} from '@app/models/producto.model';
@@ -11,10 +11,10 @@ import {ProductoFileModel} from '@app/models/productoFile.model';
 })
 export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
-  productFiles: ProductoFileModel[] = [];
-  isOverDrop = false;
+  imagesFiles: ProductoFileModel[] = [];
+  productImage: ProductoFileModel = null;
 
-  constructor(private fb: FormBuilder, private productoService: ProductoService) {
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private productoService: ProductoService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ export class ItemRegisterComponent implements OnInit {
   }
 
   saveProduct(): void {
-    if (this.Form.valid) {
+    if (this.Form.valid && this.productImage) {
       const newForm: ProductoModel = {...this.Form.value};
       newForm.precio = Number(newForm.precio);
       newForm.stock = Number(newForm.stock);
@@ -46,11 +46,56 @@ export class ItemRegisterComponent implements OnInit {
     /* this.productoService.registerProduct(this.Form.value).subscribe();*/
   }
 
-  uploadImage(): void {
-    this.productoService.loadImage(this.productFiles);
+
+  fileChanges(event): void {
+    const transference = this.getTransference(event);
+    if (!transference) {
+      return;
+    }
+    this.extractFiles(transference.files);
+    this.preventStop(event);
   }
 
-  test(event): void {
-    console.log(event);
+  // VALIDADORES DE IMAGENES
+
+  // tslint:disable-next-line:typedef
+  private getTransference(event: any) {
+    return event.target;
+  }
+
+  // tslint:disable-next-line:typedef
+  private extractFiles(imagesList: FileList) {
+    const temporalFile = imagesList[0];
+    const newFile = new ProductoFileModel(temporalFile);
+    this.imagesFiles[0] = newFile;
+    this.productImage = newFile;
+    console.log(this.productImage);
+  }
+
+  // VALIDATORS
+
+  private fileCanBeLoaded(document: File): boolean {
+    if (!this.fileDropped(document.name) && this.isImage(document.type)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  private preventStop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  private fileDropped(fileName: string): boolean {
+    if (this.imagesFiles[0].nombreArchivo === fileName) {
+      return true;
+    }
+    return false;
+  }
+
+  private isImage(typeFile: string): boolean {
+    return (typeFile === '' || typeFile === undefined) ? false : typeFile.startsWith('image');
   }
 }

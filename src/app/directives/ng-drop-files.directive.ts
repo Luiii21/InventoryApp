@@ -45,13 +45,12 @@ export class NgDropFilesDirective {
   // tslint:disable-next-line:typedef
   private extractFiles(imagesList: FileList) {
     // tslint:disable-next-line:forin
-    for (const property in Object.getOwnPropertyNames(imagesList)) {
-      const temporalFile = imagesList[property];
-      if (this.fileCanBeLoaded(temporalFile)) {
-        const newFile = new ProductoFileModel(temporalFile);
-        this.productFiles.push(newFile);
-      }
+    if (this.fileCanBeLoaded(imagesList[0])) {
+      const temporalFile = imagesList[0];
+      const newFile = new ProductoFileModel(temporalFile);
+      this.productFiles[0] = newFile;
     }
+    console.log(this.productFiles);
   }
 
 // VALIDATORS
