@@ -1,0 +1,15 @@
+@import '~assets/scss/mixins';
+
+.form {
+  height: 100%;
+  padding-top: 40px;
+
+  @include min-width-992 {
+    padding-top: 80px;
+  }
+}
+
+
+.custom-control-label {
+  font-size: 12px;
+}

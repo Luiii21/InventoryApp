@@ -57,3 +57,40 @@
 .fit-content {
   height: fit-content;
 }
+
+
+.custom-control.custom-switch {
+  position: relative;
+
+  input {
+    min-width: 40px;
+    min-height: 20px;
+    &:checked ~ .custom-control-label::after {
+      transform: translateX(.99rem);
+    }
+
+    &:checked ~ label:before {
+      background-color: yellowgreen;
+      border-color: yellowgreen;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  label {
+
+    &::before {
+      min-height: 20px;
+      min-width: 40px;
+      left: -45px;
+      top: 0;
+    }
+
+    &::after {
+      min-height: 16px;
+      min-width: 16px;
+      left: -41px;
+      top: 2px;
+    }
+  }
+}

@@ -9,6 +9,7 @@ import {map} from 'rxjs/operators';
 import {AngularFirestore} from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import {ProductoFileModel} from '@app/models/productoFile.model';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,21 @@ export class ProductoService {
       .pipe(
         map((resp: any) => {
           product.id = resp.name;
+          this.updateProduct(product);
           return product;
         })
       );
   }
+
+  listProducts(): Observable<ProductoModel[]> {
+    return this.http.get(`${environment.inventoryDB}/productos.json`).pipe(
+      map(this.formatArray)
+    );
+  }
+
   // tslint:disable-next-line:typedef
   updateProduct(product: ProductoModel) {
     const productID = product.id;
-    delete product.id;
     return this.http.put(`${environment.inventoryDB}/productos/${productID}.json`, product);
   }
 
@@ -52,5 +60,16 @@ export class ProductoService {
       });
   }
 
-
+  // tslint:disable-next-line:typedef
+  private formatArray(productsResp: object) {
+    const products: any[] = [];
+    Object.keys(productsResp).forEach(k => {
+      const product: any = productsResp[k];
+      products.push(product);
+    });
+    if (productsResp === null) {
+      return [];
+    }
+    return products;
+  }
 }

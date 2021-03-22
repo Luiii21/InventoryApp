@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductoService} from '@app/services/producto.service';
 import {ProductoModel} from '@app/models/producto.model';
@@ -48,7 +48,7 @@ export class ItemRegisterComponent implements OnInit {
       this.productoService.updateProductImage(this.productImage, newForm);
 
 
-      this.Form.reset();
+      this.Form.reset([]);
       this.productImage = null;
       this.isLoading = false;
     }

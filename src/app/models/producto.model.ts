@@ -10,8 +10,10 @@ export class ProductoModel {
   tamano: string;
   stock: number;
   imagenUrl: string;
+  disponibilidad: boolean;
 
   constructor() {
     this.imagenUrl = '';
+    this.disponibilidad = true;
   }
 }
