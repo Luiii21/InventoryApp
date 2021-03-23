@@ -32,6 +32,27 @@ export class ProductoService {
       );
   }
 
+  filterItems(parameter: any): Observable<any> {
+    return this.listProducts().pipe((map((data: any) => {
+
+      let blankArray: any[] = [...data];
+
+      // tslint:disable-next-line:forin
+      for (const i in parameter) {
+        let item: any = [...blankArray];
+        item = item.filter(f => {
+          return f[`${i}`].toLowerCase().includes(parameter[i].toLowerCase());
+        });
+        blankArray = item;
+      }
+      if (blankArray.length > 0) {
+        return blankArray;
+      } else {
+        return null;
+      }
+    })));
+  }
+
   listProducts(): Observable<ProductoModel[]> {
     return this.http.get(`${environment.inventoryDB}/productos.json`).pipe(
       map(this.formatArray)
