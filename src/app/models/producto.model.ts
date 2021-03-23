@@ -8,7 +8,8 @@ export class ProductoModel {
   genero: string;
   color: string;
   tamano: string;
-  stock: number;
+  stockInicial: number;
+  stockActual ?: number;
   imagenUrl: string;
   disponibilidad: boolean;
 

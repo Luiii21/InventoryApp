@@ -33,7 +33,7 @@ export class ItemRegisterComponent implements OnInit {
         genero: [null, [Validators.required]],
         color: [null, [Validators.required]],
         tamano: [null, [Validators.required]],
-        stock: [null, [Validators.required, Validators.min(1)]]
+        stockInicial: [null, [Validators.required, Validators.min(1)]]
       }
     );
   }
@@ -43,7 +43,8 @@ export class ItemRegisterComponent implements OnInit {
       this.isLoading = true;
       const newForm: ProductoModel = {...this.Form.value};
       newForm.precio = Number(newForm.precio);
-      newForm.stock = Number(newForm.stock);
+      newForm.stockInicial = Number(newForm.stockInicial);
+      newForm.stockActual = Number(newForm.stockInicial);
       this.productoService.registerProduct(newForm).subscribe();
       this.productoService.updateProductImage(this.productImage, newForm);
 

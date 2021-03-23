@@ -17,7 +17,7 @@
       <div class="col-12 col-lg-6 fit-content px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Producto</label>
         <select formControlName="productoId" class="custom-select">
-          <option *ngFor="let product of productList" [value]="product.id">{{product.nombre + ' (Stock: ' + product.stock + ')'}}</option>
+          <option *ngFor="let product of productList" [value]="product.id">{{product.nombre + ' (Stock: ' + product.stockActual + ')'}}</option>
         </select>
       </div>
       <div class="form-group custom-form col-12 col-lg-1 px-lg-1 mb-2">

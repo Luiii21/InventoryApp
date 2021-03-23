@@ -50,24 +50,24 @@ export class SaleRegisterComponent implements OnInit {
     if (this.Form.valid) {
       const newFormProduct = {...this.gettingStock(this.Form.get('productoId').value)};
       const newForm = {...this.Form.value};
-      newFormProduct.stock = newFormProduct.stock - this.Form.get('cantidad').value;
+      newFormProduct.stockActual = newFormProduct.stockActual - this.Form.get('cantidad').value;
       const updateStock = this.gettingStock(this.Form.get('productoId').value);
 
-      if (newFormProduct.stock === 0) {
+      if (newFormProduct.stockActual === 0) {
         newFormProduct.disponibilidad = false;
         this.productoService.updateProduct(newFormProduct).subscribe();
-        updateStock.stock = newFormProduct.stock;
+        updateStock.stockActual = newFormProduct.stockActual;
         this.salesService.registerSale(newForm).subscribe();
         this.Form.reset();
       }
-      if (newFormProduct.stock > 0) {
+      if (newFormProduct.stockActual > 0) {
         this.productoService.updateProduct(newFormProduct).subscribe();
-        updateStock.stock = newFormProduct.stock;
+        updateStock.stockActual = newFormProduct.stockActual;
         this.salesService.registerSale(newForm).subscribe();
         this.Form.reset();
       }
 
-      if (newFormProduct.stock < 0) {
+      if (newFormProduct.stockActual < 0) {
         this.errorText = 'Error al actualizar stock, intentelo de nuevo.';
       }
     }
