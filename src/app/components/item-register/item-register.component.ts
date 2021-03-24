@@ -13,7 +13,7 @@ export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
   imagesFiles: ProductoFileModel[] = [];
   productImage: ProductoFileModel = null;
-  isLoading = false;
+  loadingStatus: string;
 
   constructor(private fb: FormBuilder, private productoService: ProductoService) {
   }
@@ -33,25 +33,30 @@ export class ItemRegisterComponent implements OnInit {
         genero: [null, [Validators.required]],
         color: [null, [Validators.required]],
         tamano: [null, [Validators.required]],
-        stockInicial: [null, [Validators.required, Validators.min(1)]]
+        stockInicial: [null, [Validators.required, Validators.min(1)]],
+        disponibilidad: [true],
+        creacionFecha: [this.dateFormat()]
       }
     );
   }
 
   saveProduct(): void {
+    this.loadingStatus = 'Cargando';
     if (this.Form.valid && this.productImage) {
-      this.isLoading = true;
+      this.Form.disable();
       const newForm: ProductoModel = {...this.Form.value};
       newForm.precio = Number(newForm.precio);
       newForm.stockInicial = Number(newForm.stockInicial);
       newForm.stockActual = Number(newForm.stockInicial);
       this.productoService.registerProduct(newForm).subscribe();
       this.productoService.updateProductImage(this.productImage, newForm);
-
-
-      this.Form.reset([]);
-      this.productImage = null;
-      this.isLoading = false;
+      this.loadingStatus = 'Registro completado';
+      setTimeout(() => {
+        this.Form.reset([]);
+        this.productImage = null;
+        this.Form.enable();
+        this.loadingStatus = '';
+      }, 2000);
     }
   }
 
@@ -63,7 +68,12 @@ export class ItemRegisterComponent implements OnInit {
     this.extractFiles(transference.files);
   }
 
-  // VALIDADORES DE IMAGENES
+  // VALIDADORES
+
+  private dateFormat(): string {
+    const date = new Date();
+    return String(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+  }
 
   // tslint:disable-next-line:typedef
   private getTransference(event: any) {

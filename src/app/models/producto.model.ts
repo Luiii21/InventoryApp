@@ -12,6 +12,8 @@ export class ProductoModel {
   stockActual ?: number;
   imagenUrl: string;
   disponibilidad: boolean;
+  creacionFecha: string;
+  updateFecha: string;
 
   constructor() {
     this.imagenUrl = '';

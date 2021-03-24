@@ -2,7 +2,7 @@
   <div class="col-12 col-lg-8 form">
     <h3 class="inv-text-secondary mb-3">Editar producto</h3>
     <form class="row no-gutters" [formGroup]="editForm">
-      <div class="col-12 col-lg-2 fit-content px-lg-1 mb-2">
+      <div class="col-12 col-lg-3 fit-content px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Tienda</label>
         <select formControlName="tienda" class="custom-select" (change)="getItems()">
           <option value="tienda1">Tienda 1</option>
@@ -10,7 +10,7 @@
           <option value="tienda3">Tienda 3</option>
         </select>
       </div>
-      <div class="col-12 col-lg-6 fit-content px-lg-1 mb-2">
+      <div class="col-12 col-lg-9 fit-content px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">
           Producto
           <div class="spinner-border inv-text-primary mx-2" role="status" *ngIf="loadingStatus === 'loading-products'">
@@ -64,30 +64,11 @@
           <option value="zapatos">Zapatos</option>
         </select>
       </div>
-      <div class="form-group custom-form col-12 col-lg-2">
+      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
         <label class="custom-col-label text-secondary">Precio</label>
         <input mask="0*.00" formControlName="precio" type="text" class="form-control" aria-label="Precio">
       </div>
-      <div class="form-group custom-form col-12 col-lg-6 px-lg-1">
-        <label class="custom-col-label text-secondary">Nombre de producto</label>
-        <input formControlName="nombre" type="text" class="form-control" placeholder="*"
-               aria-label="Nombre de producto">
-      </div>
-      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
-        <label class="custom-col-label text-secondary">Marca</label>
-        <input formControlName="marca" type="text" class="form-control" placeholder="*" aria-label="Marca">
-      </div>
-      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
-        <label class="custom-col-label text-secondary">Stock inicial</label>
-        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*"
-               aria-label="Stock Inicial">
-      </div>
-      <div class="form-group custom-form col-12 col-lg-2">
-        <label class="custom-col-label text-secondary">Stock actual</label>
-        <input mask="0*" formControlName="stockActual" type="text" class="form-control" placeholder="*"
-               aria-label="Stock Actual">
-      </div>
-      <div class="col-12 col-lg-6 fit-content">
+      <div class="col-12 col-lg-4 fit-content">
         <label class="custom-col-label text-secondary">Genero</label>
         <div class="btn-group btn-group-toggle custom-btn-group btn-block" data-toggle="buttons">
           <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('genero').value === 'hombre'}">
@@ -112,7 +93,26 @@
           </label>
         </div>
       </div>
-      <div class="col-12 col-lg-4 fit-content px-lg-1">
+      <div class="form-group custom-form col-12 col-lg-6 px-lg-1">
+        <label class="custom-col-label text-secondary">Nombre de producto</label>
+        <input formControlName="nombre" type="text" class="form-control" placeholder="*"
+               aria-label="Nombre de producto">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
+        <label class="custom-col-label text-secondary">Marca</label>
+        <input formControlName="marca" type="text" class="form-control" placeholder="*" aria-label="Marca">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-3 px-lg-1">
+        <label class="custom-col-label text-secondary">Stock inicial</label>
+        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*"
+               aria-label="Stock Inicial">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-3">
+        <label class="custom-col-label text-secondary">Stock actual</label>
+        <input mask="0*" formControlName="stockActual" type="text" class="form-control" placeholder="*"
+               aria-label="Stock Actual">
+      </div>
+      <div class="col-12 col-lg-3 fit-content px-lg-1">
         <label class="custom-col-label text-secondary">Color</label>
         <select formControlName="color" class="custom-select">
           <option value="rojo">Rojo</option>
@@ -120,21 +120,26 @@
           <option value="verde">Verde</option>
         </select>
       </div>
-      <div class="form-group custom-form col-12 col-lg-2">
+      <div class="form-group custom-form col-12 col-lg-3">
         <label class="custom-col-label text-secondary">Tamaño</label>
         <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text"
                class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
-      <div class="col-12 col-lg-4 mt-3">
+      <div class="custom-control custom-switch col-12 col-lg-3 d-flex justify-content-lg-center align-items-center pl-5 pl-lg-0 m-lg-0 mt-3">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="disponibilidad">
+        <label class="custom-control-label text-secondary" for="customSwitch1"><h6 class="m-0">Disponibilidad</h6></label>
+      </div>
+      <div class="align-items-center col-12 col-lg-5 d-flex justify-content-lg-end pr-3 mt-3">
+        <small class="text-success ml-lg-3 font-weight-bold">{{loadingStatus}}</small>
+      </div>
+      <div class="col-12 col-lg-4 mt-3 ml-lg-auto">
         <button type="submit" class="btn btn-block btn-success border rounded-pill"
-                [disabled]="Form.invalid || loadingStatus === 'saving-update'">
-          <span *ngIf="loadingStatus !== 'saving-update'">
+                [disabled]="Form.invalid || loadingStatus === 'Cargando'">
+          <span *ngIf="loadingStatus !== 'Cargando'">
             Guardar
           </span>
-          <span *ngIf="loadingStatus === 'saving-update'">
-            <div class="spinner-border text-white" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
+          <span *ngIf="loadingStatus === 'Cargando'">
+            {{loadingStatus}}
           </span>
         </button>
       </div>

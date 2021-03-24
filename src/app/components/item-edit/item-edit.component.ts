@@ -20,7 +20,6 @@ export class ItemEditComponent implements OnInit {
   productList: ProductoModel[];
   selectedProduct: ProductoModel = null;
   loadingStatus: string;
-  messageResult: string;
 
   constructor(private fb: FormBuilder, private productoService: ProductoService, private router: Router) {
   }
@@ -42,7 +41,9 @@ export class ItemEditComponent implements OnInit {
         color: [null, [Validators.required]],
         tamano: [null, [Validators.required]],
         stockInicial: [null, [Validators.required, Validators.min(1)]],
-        stockActual: [null, [Validators.required, Validators.min(1)]]
+        stockActual: [null, [Validators.required, Validators.min(1)]],
+        disponibilidad: [null, Validators.required],
+        updateFecha: [null]
       }
     );
 
@@ -66,7 +67,7 @@ export class ItemEditComponent implements OnInit {
         this.editForm.get('productoId').enable();
       }
     });
-    this.loadingStatus = null;
+    this.loadingStatus = '';
   }
 
   setProductToEdit(): void {
@@ -76,6 +77,7 @@ export class ItemEditComponent implements OnInit {
     const selectedProduct = this.productList.filter(p => p.id === this.editForm.get('productoId').value)[0];
     this.selectedProduct = selectedProduct;
     this.disableImage = false;
+    console.log(selectedProduct);
     this.Form.reset(selectedProduct);
     this.Form.enable();
   }
@@ -84,25 +86,34 @@ export class ItemEditComponent implements OnInit {
     const newForm = {...this.Form.value};
     if (this.Form.valid || this.productImage) {
       newForm.id = this.selectedProduct.id;
+      newForm.creacionFecha = this.selectedProduct.creacionFecha;
       if (!this.Form.pristine) {
-        this.loadingStatus = 'saving-update';
+        this.loadingStatus = 'Cargando';
+        this.Form.disable();
         newForm.precio = Number(newForm.precio);
         newForm.stockInicial = Number(newForm.stockInicial);
         newForm.stockActual = Number(newForm.stockActual);
+        newForm.updateFecha = this.dateFormat();
         this.productoService.updateProduct(newForm).subscribe();
-        this.Form.disable();
-        this.router.navigate(['buscar-producto']).finally();
+        this.loadingStatus = 'Actualización completada';
       }
 
       if (!this.productImage) {
         newForm.imagenUrl = this.selectedProduct.imagenUrl;
       } else {
+        this.loadingStatus = 'Cargando';
         this.Form.disable();
         this.productoService.updateProductImage(this.productImage, newForm);
-        this.router.navigate(['buscar-producto']).finally();
       }
+
+      setTimeout(() => {
+        this.Form.reset([]);
+        this.editForm.reset([]);
+        this.productImage = null;
+        this.Form.enable();
+        this.loadingStatus = '';
+      }, 2000);
     }
-    this.loadingStatus = null;
   }
 
   loadImage(event): void {
@@ -114,6 +125,11 @@ export class ItemEditComponent implements OnInit {
   }
 
   // VALIDADORES DE IMAGENES
+
+  private dateFormat(): string {
+    const date = new Date();
+    return String(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+  }
 
   // tslint:disable-next-line:typedef
   private getTransference(event: any) {

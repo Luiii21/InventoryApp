@@ -98,16 +98,17 @@
       </div>
       <div class="col-12 col-lg-4 mt-3">
         <button type="submit" class="btn btn-block btn-success border rounded-pill"
-                [disabled]="!productImage || Form.invalid || isLoading">
-          <span *ngIf="!isLoading">
+                [disabled]="!productImage || Form.invalid || loadingStatus === 'Cargando'">
+          <span *ngIf="loadingStatus !== 'Cargando'">
             Guardar
           </span>
-          <span *ngIf="isLoading">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
+          <span *ngIf="loadingStatus === 'Cargando'">
+            Cargando..
           </span>
         </button>
+      </div>
+      <div class="col-12 col-lg-3 mt-3 d-flex align-items-center" *ngIf="loadingStatus === 'Registro completado'">
+        <small class="text-success ml-lg-3 font-weight-bold">{{loadingStatus}}</small>
       </div>
     </form>
   </div>
