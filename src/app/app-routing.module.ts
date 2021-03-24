@@ -7,6 +7,14 @@ const routes: Routes = [
     loadChildren: () => import('@components/home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'buscar-producto',
+    loadChildren: () => import('@components/item-search/item-search.module').then(m => m.ItemSearchModule)
+  },
+  {
+    path: 'editar-producto',
+    loadChildren: () => import('@components/item-edit/item-edit.module').then(m => m.ItemEditModule)
+  },
+  {
     path: 'registro-producto',
     loadChildren: () => import('@components/item-register/item-register.module.ts').then(m => m.ItemRegisterModule)
   },
@@ -17,10 +25,6 @@ const routes: Routes = [
   {
     path: 'panel-control',
     loadChildren: () => import('@components/control-panel/control-panel.module').then(m => m.ControlPanelModule)
-  },
-  {
-    path: 'buscar-producto',
-    loadChildren: () => import('@components/item-search/item-search.module').then(m => m.ItemSearchModule)
   }
 ];
 

@@ -13,6 +13,7 @@ import {environment} from '../../environments/environment';
 import {NgDropFilesDirective} from '@app/directives/ng-drop-files.directive';
 import {OnlyNumbersDirective} from '@app/directives/only-numbers.directive';
 import {OnlyTextDirective} from '@app/directives/only-text.directive';
+import {NgxMaskModule} from 'ngx-mask';
 // FIREBASE
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -26,12 +27,14 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
     ReactiveFormsModule,
     NgDropFilesDirective,
     OnlyNumbersDirective,
-    OnlyTextDirective
+    OnlyTextDirective,
+    NgxMaskModule
   ],
   imports: [
     CommonModule,
     RouterModule,
     HttpClientModule,
+    NgxMaskModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule

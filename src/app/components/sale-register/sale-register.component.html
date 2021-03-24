@@ -4,7 +4,7 @@
     <form class="row no-gutters" [formGroup]="Form" (ngSubmit)="registerSale()">
       <div class="form-group custom-form col-12 col-lg-3 mb-2">
         <label class="custom-col-label text-secondary">Número de venta</label>
-        <input appOnlyNumbers formControlName="numeroVenta" type="text" class="form-control" aria-label="Número de venta">
+        <input mask="0*" formControlName="numeroVenta" type="text" class="form-control" aria-label="Número de venta">
       </div>
       <div class="col-12 col-lg-2 fit-content px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Tienda</label>
@@ -22,7 +22,7 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-1 px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Cantidad vendida</label>
-        <input appOnlyNumbers formControlName="cantidad" type="text" class="form-control" aria-label="Cantidad">
+        <input mask="0*" formControlName="cantidad" type="text" class="form-control" aria-label="Cantidad">
       </div>
       <div class="col-12 col-lg-5 fit-content mb-2">
         <label class="custom-col-label text-secondary">Metodo de pago</label>
@@ -51,11 +51,11 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-4 px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Tarjeta</label>
-        <input appOnlyNumbers formControlName="tarjeta" type="text" class="form-control" aria-label="Cantidad">
+        <input mask="0*" formControlName="tarjeta" type="text" class="form-control" aria-label="Cantidad">
       </div>
       <div class="form-group custom-form col-12 col-lg-3 px-lg-1 mb-2">
         <label class="custom-col-label text-secondary">Total del pago</label>
-        <input appOnlyNumbers formControlName="totalPago" type="text" class="form-control" aria-label="Cantidad">
+        <input mask="0*.00" formControlName="totalPago" type="text" class="form-control" aria-label="Cantidad">
       </div>
       <div class="col-12 mb-2" *ngIf="errorText">
         <h6 class="inv-text-secondary">{{errorText}}</h6>

@@ -1,6 +1,12 @@
 @import '~assets/scss/colors';
 @import '~assets/scss/mixins';
 
+button {
+  .spinner-border {
+    font-size: 13px;
+  }
+}
+
 .btn-primary-inv {
   border-radius: 20px;
   background-color: white;
@@ -54,11 +60,6 @@
   max-height: 36px;
 }
 
-.fit-content {
-  height: fit-content;
-}
-
-
 .custom-control.custom-switch {
   position: relative;
 
@@ -93,4 +94,49 @@
       top: 2px;
     }
   }
+}
+
+.custom-file {
+  position: relative;
+  max-width: 130px;
+  height: 150px;
+
+  input {
+    cursor: pointer;
+    width: 130px;
+    height: 150px;
+    opacity: 0;
+    position: absolute;
+    z-index: 9;
+    left: 0;
+  }
+
+  img, img:hover {
+    width: 130px;
+    height: 150px;
+  }
+}
+
+.drop-zone {
+  border: dotted 3px lightgray;
+  opacity: 0.5;
+  color: #666;
+  text-align: center;
+}
+
+.dropdown-menu {
+  border: 0 solid transparent;
+
+  @include min-width-992 {
+    border: 1px solid lightgray;
+  }
+}
+
+.fit-content {
+  height: fit-content;
+}
+
+.spinner-border {
+  height: 15px;
+  width: 15px;
 }

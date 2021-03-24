@@ -1,11 +1,32 @@
 <div class="row flex-column-reverse flex-lg-row h-100 no-gutters">
   <div class="col-12 col-lg-8 form">
-    <h3 class="inv-text-secondary mb-3">Registrar producto</h3>
+    <h3 class="inv-text-secondary mb-3">Editar producto</h3>
+    <form class="row no-gutters" [formGroup]="editForm">
+      <div class="col-12 col-lg-2 fit-content px-lg-1 mb-2">
+        <label class="custom-col-label text-secondary">Tienda</label>
+        <select formControlName="tienda" class="custom-select" (change)="getItems()">
+          <option value="tienda1">Tienda 1</option>
+          <option value="tienda2">Tienda 2</option>
+          <option value="tienda3">Tienda 3</option>
+        </select>
+      </div>
+      <div class="col-12 col-lg-6 fit-content px-lg-1 mb-2">
+        <label class="custom-col-label text-secondary">
+          Producto
+          <div class="spinner-border inv-text-primary mx-2" role="status" *ngIf="loadingStatus === 'loading-products'">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </label>
+        <select formControlName="productoId" class="custom-select" (change)="setProductToEdit()">
+          <option *ngFor="let product of productList" [value]="product.id">{{product.nombre}}</option>
+        </select>
+      </div>
+    </form>
     <form class="row no-gutters" [formGroup]="Form" (ngSubmit)="saveProduct()">
       <div class="col-12 col-lg-6 fit-content">
         <label class="custom-col-label text-secondary">Escoger tienda</label>
         <div class="btn-group btn-group-toggle custom-btn-group btn-block" data-toggle="buttons">
-          <label class="btn btn-primary-inv">
+          <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('tienda').value === 'tienda1'}">
             <input formControlName="tienda"
                    type="radio"
                    name="tienda"
@@ -15,7 +36,7 @@
             <i class="fa fa-shopping-basket mr-1"></i>
             <small class="text-uppercase">Tienda 1</small>
           </label>
-          <label class="btn btn-primary-inv">
+          <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('tienda').value === 'tienda2'}">
             <input formControlName="tienda"
                    type="radio"
                    name="tienda"
@@ -24,7 +45,7 @@
             <i class="fa fa-shopping-basket mr-1"></i>
             <small class="text-uppercase">Tienda 2</small>
           </label>
-          <label class="btn btn-primary-inv">
+          <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('tienda').value === 'tienda3'}">
             <input formControlName="tienda"
                    type="radio"
                    name="tienda"
@@ -47,22 +68,29 @@
         <label class="custom-col-label text-secondary">Precio</label>
         <input mask="0*.00" formControlName="precio" type="text" class="form-control" aria-label="Precio">
       </div>
-      <div class="form-group custom-form col-12 col-lg-6">
+      <div class="form-group custom-form col-12 col-lg-6 px-lg-1">
         <label class="custom-col-label text-secondary">Nombre de producto</label>
-        <input formControlName="nombre" type="text" class="form-control" placeholder="*" aria-label="Nombre de producto">
+        <input formControlName="nombre" type="text" class="form-control" placeholder="*"
+               aria-label="Nombre de producto">
       </div>
-      <div class="form-group custom-form col-12 col-lg-4 px-lg-1">
+      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
         <label class="custom-col-label text-secondary">Marca</label>
         <input formControlName="marca" type="text" class="form-control" placeholder="*" aria-label="Marca">
       </div>
+      <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
+        <label class="custom-col-label text-secondary">Stock inicial</label>
+        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*"
+               aria-label="Stock Inicial">
+      </div>
       <div class="form-group custom-form col-12 col-lg-2">
-        <label class="custom-col-label text-secondary">Stock</label>
-        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*" aria-label="Stock">
+        <label class="custom-col-label text-secondary">Stock actual</label>
+        <input mask="0*" formControlName="stockActual" type="text" class="form-control" placeholder="*"
+               aria-label="Stock Actual">
       </div>
       <div class="col-12 col-lg-6 fit-content">
         <label class="custom-col-label text-secondary">Genero</label>
         <div class="btn-group btn-group-toggle custom-btn-group btn-block" data-toggle="buttons">
-          <label class="btn btn-primary-inv">
+          <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('genero').value === 'hombre'}">
             <input formControlName="genero"
                    type="radio"
                    name="genero"
@@ -72,7 +100,7 @@
             <i class="fa fa-male mr-1"></i>
             <small class="text-uppercase">Hombre</small>
           </label>
-          <label class="btn btn-primary-inv">
+          <label class="btn btn-primary-inv" [ngClass]="{'active': this.Form.get('genero').value === 'mujer'}">
             <input formControlName="genero"
                    type="radio"
                    name="genero"
@@ -94,16 +122,17 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
         <label class="custom-col-label text-secondary">Tamaño</label>
-        <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text" class="form-control" placeholder="*" aria-label="Tamaño">
+        <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text"
+               class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
       <div class="col-12 col-lg-4 mt-3">
         <button type="submit" class="btn btn-block btn-success border rounded-pill"
-                [disabled]="!productImage || Form.invalid || isLoading">
-          <span *ngIf="!isLoading">
+                [disabled]="Form.invalid || loadingStatus === 'saving-update'">
+          <span *ngIf="loadingStatus !== 'saving-update'">
             Guardar
           </span>
-          <span *ngIf="isLoading">
-            <div class="spinner-border text-primary" role="status">
+          <span *ngIf="loadingStatus === 'saving-update'">
+            <div class="spinner-border text-white" role="status">
               <span class="sr-only">Loading...</span>
             </div>
           </span>
@@ -116,7 +145,7 @@
     <div class="input-group d-flex justify-content-center my-4">
       <div class="custom-file">
         <img src="./assets/img/download-img.png" alt="download-img">
-        <input (change)="loadImage($event)" type="file" class="custom-file-input" id="inputGroupFile01"
+        <input (change)="loadImage($event)" type="file" class="custom-file-input" id="inputGroupFile01" [disabled]="disableImage"
                aria-describedby="inputGroupFileAddon01">
       </div>
     </div>

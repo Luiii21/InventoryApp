@@ -9,11 +9,11 @@ import {SharedModule} from '@shared/shared.module';
 
 @NgModule({
   declarations: [ItemRegisterComponent],
-  imports: [
-    CommonModule,
-    ItemRegisterRoutingModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        ItemRegisterRoutingModule,
+        SharedModule
+    ]
 })
 export class ItemRegisterModule {
 }
