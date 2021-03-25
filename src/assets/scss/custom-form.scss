@@ -43,7 +43,7 @@ button {
 .custom-select {
   border-radius: 15px;
   height: 36px;
-
+  font-size: 15px;
   &:focus {
     box-shadow: none;
     border: 1px solid $secondary;
@@ -129,6 +129,72 @@ button {
 
   @include min-width-992 {
     border: 1px solid lightgray;
+  }
+}
+
+.inventory-forms {
+  .form-control {
+    border-radius: 15px;
+    border-right: 1px solid $primary;
+    font-size: 12px;
+    min-height: 36px;
+    height: 36px;
+  }
+
+  .form-control::placeholder {
+    font-size: 12px;
+  }
+
+  .input-group-append .input-group-text {
+    background-color: white;
+    border: 1px solid $primary;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    color: $primary;
+    min-height: 36px;
+    height: 36px;
+  }
+}
+
+.btn-primary-app {
+  border-radius: 20px;
+  background-color: white;
+  border: 1px solid $primary;
+  font-size: 14px;
+
+  &.active, &:hover {
+    background-color: $secondary;
+    color: white;
+  }
+}
+
+
+.card {
+  border-radius: 25px;
+
+  &.filter-panel {
+    width: 100%;
+
+    @include min-width-992 {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  &.item-card {
+    margin-bottom: 15px;
+
+    img {
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      height: 200px;
+      width: 100%;
+    }
+
+    .card-body {
+      min-height: 130px;
+      height: 130px;
+    }
   }
 }
 

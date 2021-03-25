@@ -66,7 +66,7 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-2 px-lg-1">
         <label class="custom-col-label text-secondary">Precio</label>
-        <input mask="0*.00" formControlName="precio" type="text" class="form-control" aria-label="Precio">
+        <input appOnlyNumbers formControlName="precio" type="number" min="0" class="form-control" aria-label="Precio">
       </div>
       <div class="col-12 col-lg-4 fit-content">
         <label class="custom-col-label text-secondary">Genero</label>
@@ -121,7 +121,7 @@
         </select>
       </div>
       <div class="form-group custom-form col-12 col-lg-3">
-        <label class="custom-col-label text-secondary">Tamaño</label>
+        <label class="custom-col-label text-secondary">Talla:</label>
         <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text"
                class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
@@ -149,12 +149,13 @@
     <h3 class="inv-text-secondary mb-4">Subir foto</h3>
     <div class="input-group d-flex justify-content-center my-4">
       <div class="custom-file">
-        <img src="./assets/img/download-img.png" alt="download-img">
+        <img *ngIf="!selectedProduct" [src]="filePicked || './assets/img/download-img.png'" alt="download-img">
+        <img *ngIf="selectedProduct" [src]="filePicked || this.selectedProduct.imagenUrl" alt="product-img">
         <input (change)="loadImage($event)" type="file" class="custom-file-input" id="inputGroupFile01" [disabled]="disableImage"
                aria-describedby="inputGroupFileAddon01">
       </div>
     </div>
-    <h6 class="text-center my-2" *ngIf="!productImage">Selecione imagen de producto</h6>
+    <h6 class="text-center my-2" *ngIf="!productImage">Selecione nueva imagen de producto</h6>
     <h6 class="text-center my-2" *ngIf="productImage">{{'Imagen de producto: ' + productImage.nombreArchivo}}</h6>
   </div>
 </div>

@@ -1,1 +1,64 @@
-<p>search-panel works!</p>
+<div class="card filter-panel shadow-sm">
+  <div class="card-body filter-panel">
+    <form autocomplete="off" [formGroup]="Form" (ngSubmit)="searchClothes()">
+      <div class="row no-gutters fit-content mb-3">
+        <h6 class="text-primary-app">Tienda:</h6>
+        <select formControlName="tienda" class="custom-select">
+          <option [value]="tienda.value" *ngFor="let tienda of tiendaList">{{tienda.nombre}}</option>
+        </select>
+      </div>
+      <h6>Buscar:</h6>
+      <div class="inventory-forms input-group mb-3">
+        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+               formControlName="nombre"
+               aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <span class="input-group-text btn" id="basic-addon2" (click)="searchClothes()">
+              <i class="fa fa-search"></i>
+            </span>
+        </div>
+      </div>
+      <h6>Color:</h6>
+      <div class="d-flex flex-column mb-3">
+        <div class="custom-control custom-radio" *ngFor="let color of colorList">
+          <input formControlName="color" type="radio" [id]="color.value" name="color" [value]="color.value"  class="custom-control-input">
+          <label class="custom-control-label" [for]="color.value"><small class="text-uppercase">{{color.value}}</small></label>
+        </div>
+      </div>
+      <div class="row no-gutters fit-content mb-3">
+        <h6 class="text-primary-app">Genero:</h6>
+        <select formControlName="genero" class="custom-select">
+          <option [value]="gender.value" *ngFor="let gender of genderList" class="text-uppercase">{{gender.nombre}}</option>
+        </select>
+      </div>
+      <h6>Ordernar:</h6>
+      <div class="row no-gutters mb-0 mb-lg-2 mb-3">
+        <div class="col-12 col-lg-6 pr-lg-1">
+          <button type="button" class="btn btn-block btn-primary-app" (click)="orderLowerHigher()">
+            <small>MENOR A MAYOR</small>
+          </button>
+        </div>
+        <div class="col-12 col-lg-6 pl-lg-1 my-2 my-lg-0">
+          <button type="button" class="btn btn-block btn-primary-app" (click)="orderHigherLower()">
+            <small>MAYOR A MENOR</small>
+          </button>
+        </div>
+      </div>
+      <h6 class="text-primary-app mt-3">Tipo:</h6>
+      <div class="d-flex flex-column mb-3">
+        <div class="custom-control custom-radio" *ngFor="let type of typesList">
+          <input formControlName="tipo" type="radio" [id]="type.value" name="tipo" [value]="type.value" class="custom-control-input">
+          <label class="custom-control-label" [for]="type.value"><small class="text-uppercase">{{type.value}}</small></label>
+        </div>
+      </div>
+      <div class="d-flex w-100">
+        <button class="btn p-0" type="button" (click)="resetFilter()">
+          <small class="inv-text-primary">Reestablecer filtros</small>
+        </button>
+      </div>
+      <button type="submit" class="btn btn-primary-app btn-block mt-3 inv-text-primary">
+        Buscar
+      </button>
+    </form>
+  </div>
+</div>

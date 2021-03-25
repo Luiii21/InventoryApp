@@ -45,7 +45,7 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
         <label class="custom-col-label text-secondary">Precio</label>
-        <input mask="0*.00" formControlName="precio" type="text" class="form-control" aria-label="Precio">
+        <input appOnlyNumbers formControlName="precio" type="number" min="0" class="form-control" aria-label="Precio">
       </div>
       <div class="form-group custom-form col-12 col-lg-6">
         <label class="custom-col-label text-secondary">Nombre de producto</label>
@@ -93,7 +93,7 @@
         </select>
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
-        <label class="custom-col-label text-secondary">Tamaño</label>
+        <label class="custom-col-label text-secondary">Talla</label>
         <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text" class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
       <div class="col-12 col-lg-4 mt-3">
@@ -116,7 +116,7 @@
     <h3 class="inv-text-secondary mb-4">Subir foto</h3>
     <div class="input-group d-flex justify-content-center my-4">
       <div class="custom-file">
-        <img src="./assets/img/download-img.png" alt="download-img">
+        <img [src]="filePicked || './assets/img/download-img.png'" alt="download-img">
         <input (change)="loadImage($event)" type="file" class="custom-file-input" id="inputGroupFile01"
                aria-describedby="inputGroupFileAddon01">
       </div>

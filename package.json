@@ -23,6 +23,7 @@
     "bootstrap": "^4.6.0",
     "firebase": "^7.24.0",
     "jquery": "^3.6.0",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-mask": "^11.1.5",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",

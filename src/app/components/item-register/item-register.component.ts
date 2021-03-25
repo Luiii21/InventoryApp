@@ -14,6 +14,7 @@ export class ItemRegisterComponent implements OnInit {
   imagesFiles: ProductoFileModel[] = [];
   productImage: ProductoFileModel = null;
   loadingStatus: string;
+  filePicked: string | ArrayBuffer;
 
   constructor(private fb: FormBuilder, private productoService: ProductoService) {
   }
@@ -27,7 +28,7 @@ export class ItemRegisterComponent implements OnInit {
       {
         tienda: [null, [Validators.required, Validators.min(1), Validators.max(3)]],
         tipo: [null, Validators.required],
-        precio: [null, [Validators.required, Validators.min(1)]],
+        precio: [null, [Validators.required, Validators.minLength(1)]],
         nombre: [null, [Validators.required, Validators.minLength(5)]],
         marca: [null, [Validators.required]],
         genero: [null, [Validators.required]],
@@ -45,7 +46,6 @@ export class ItemRegisterComponent implements OnInit {
     if (this.Form.valid && this.productImage) {
       this.Form.disable();
       const newForm: ProductoModel = {...this.Form.value};
-      newForm.precio = Number(newForm.precio);
       newForm.stockInicial = Number(newForm.stockInicial);
       newForm.stockActual = Number(newForm.stockInicial);
       this.productoService.registerProduct(newForm).subscribe();
@@ -61,6 +61,7 @@ export class ItemRegisterComponent implements OnInit {
   }
 
   loadImage(event): void {
+    this.readURL(event);
     const transference = this.getTransference(event);
     if (!transference) {
       return;
@@ -73,6 +74,17 @@ export class ItemRegisterComponent implements OnInit {
   private dateFormat(): string {
     const date = new Date();
     return String(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+  }
+
+  private readURL(event): void {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.filePicked = reader.result;
+
+      reader.readAsDataURL(file);
+    }
   }
 
   // tslint:disable-next-line:typedef

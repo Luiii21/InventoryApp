@@ -20,18 +20,6 @@ export class ProductoService {
   constructor(private http: HttpClient, private db: AngularFirestore) {
   }
 
-  // tslint:disable-next-line:typedef
-  registerProduct(product: ProductoModel) {
-    return this.http.post(`${environment.inventoryDB}/productos.json`, product)
-      .pipe(
-        map((resp: any) => {
-          product.id = resp.name;
-          this.updateProduct(product);
-          return product;
-        })
-      );
-  }
-
   filterItems(parameter: any): Observable<any> {
     return this.listProducts().pipe((map((data: any) => {
 
@@ -51,6 +39,18 @@ export class ProductoService {
         return null;
       }
     })));
+  }
+
+  // tslint:disable-next-line:typedef
+  registerProduct(product: ProductoModel) {
+    return this.http.post(`${environment.inventoryDB}/productos.json`, product)
+      .pipe(
+        map((resp: any) => {
+          product.id = resp.name;
+          this.updateProduct(product);
+          return product;
+        })
+      );
   }
 
   listProducts(): Observable<ProductoModel[]> {

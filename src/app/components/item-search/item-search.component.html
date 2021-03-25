@@ -1,1 +1,8 @@
-<p>item-search works!</p>
+<div class="d-flex flex-column flex-lg-row h-100">
+  <div class="panel filters">
+    <app-search-panel (clothesList)="receivedClothes = $event"></app-search-panel>
+  </div>
+  <div class="panel cards">
+    <app-search-display [clothesReceivedList]="receivedClothes"></app-search-display>
+  </div>
+</div>
