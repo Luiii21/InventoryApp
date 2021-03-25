@@ -13,6 +13,7 @@ import {environment} from '../../environments/environment';
 import {NgDropFilesDirective} from '@app/directives/ng-drop-files.directive';
 import {OnlyNumbersDirective} from '@app/directives/only-numbers.directive';
 import {OnlyTextDirective} from '@app/directives/only-text.directive';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {NgxMaskModule} from 'ngx-mask';
 // FIREBASE
 import {AngularFireModule} from 'angularfire2';
@@ -28,13 +29,15 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
     NgDropFilesDirective,
     OnlyNumbersDirective,
     OnlyTextDirective,
-    NgxMaskModule
+    NgxMaskModule,
+    PaginationModule
   ],
   imports: [
     CommonModule,
     RouterModule,
     HttpClientModule,
     NgxMaskModule.forRoot(),
+    PaginationModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule

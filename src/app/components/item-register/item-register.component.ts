@@ -53,6 +53,7 @@ export class ItemRegisterComponent implements OnInit {
       this.loadingStatus = 'Registro completado';
       setTimeout(() => {
         this.Form.reset([]);
+        this.filePicked = null;
         this.productImage = null;
         this.Form.enable();
         this.loadingStatus = '';

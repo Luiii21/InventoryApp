@@ -112,6 +112,7 @@ export class ItemEditComponent implements OnInit {
       setTimeout(() => {
         this.Form.reset([]);
         this.editForm.reset([]);
+        this.filePicked = null;
         this.productImage = null;
         this.loadingStatus = '';
       }, 2000);

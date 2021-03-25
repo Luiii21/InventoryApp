@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProductoService} from '@app/services/producto.service';
 import {ProductoModel} from '@app/models/producto.model';
+import {PageChangedEvent} from 'ngx-bootstrap/pagination';
 
 @Component({
   selector: 'app-search-panel',
@@ -20,6 +21,7 @@ export class SearchPanelComponent implements OnInit {
     {nombre: 'Mujer', value: 'mujer'},
     {nombre: 'Niño', value: 'nino'},
     {nombre: 'Niña', value: 'nina'}];
+  itemsPerPage = 6;
 
   constructor(private productoService: ProductoService,
               private fb: FormBuilder) {
@@ -47,7 +49,8 @@ export class SearchPanelComponent implements OnInit {
       this.Clothes = clothes.filter(x => {
         return x.disponibilidad === true;
       });
-      this.clothesList.emit({data: this.Clothes, status: 'Loaded'});
+      const paginatedClothes = this.Clothes.slice(0, this.itemsPerPage);
+      this.clothesList.emit({data: paginatedClothes, status: 'Loaded'});
     });
   }
 
@@ -67,7 +70,9 @@ export class SearchPanelComponent implements OnInit {
         });
 
         if (availableClothes !== null && availableClothes.length !== 0) {
-          this.clothesList.emit({data: availableClothes, status: 'Loaded'});
+          this.Clothes = availableClothes;
+          const paginatedClothes = this.Clothes.slice(0, this.itemsPerPage);
+          this.clothesList.emit({data: paginatedClothes, status: 'Loaded'});
         } else {
           this.clothesList.emit({data: [], status: 'error'});
         }
@@ -101,5 +106,12 @@ export class SearchPanelComponent implements OnInit {
     this.Clothes = [];
     this.Form.reset([]);
     this.getAllClothes();
+  }
+
+  pageChanged(event: PageChangedEvent): void {
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    const endItem = event.page * event.itemsPerPage;
+    const paginatedClothes = this.Clothes.slice(startItem, endItem);
+    this.clothesList.emit({data: paginatedClothes, status: 'Loaded'});
   }
 }

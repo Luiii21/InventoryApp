@@ -6,6 +6,7 @@ import { ItemSearchComponent } from './item-search.component';
 import { SearchPanelComponent } from './search-panel/search-panel.component';
 import { SearchDisplayComponent } from './search-display/search-display.component';
 import {SharedModule} from '@shared/shared.module';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {SharedModule} from '@shared/shared.module';
     imports: [
         CommonModule,
         ItemSearchRoutingModule,
-        SharedModule
+        SharedModule,
+        PaginationModule
     ]
 })
 export class ItemSearchModule { }

@@ -14,6 +14,7 @@ button {
   color: $primary;
   font-size: 14px;
   max-height: 36px;
+
   &.active, &:hover {
     background-color: $secondary;
     border: 1px solid $secondary;
@@ -44,6 +45,7 @@ button {
   border-radius: 15px;
   height: 36px;
   font-size: 15px;
+
   &:focus {
     box-shadow: none;
     border: 1px solid $secondary;
@@ -66,6 +68,7 @@ button {
   input {
     min-width: 40px;
     min-height: 20px;
+
     &:checked ~ .custom-control-label::after {
       transform: translateX(.99rem);
     }
@@ -94,6 +97,11 @@ button {
       top: 2px;
     }
   }
+}
+
+.custom-pagination {
+  width: 100%;
+  // background-color: lightgrey;
 }
 
 .custom-file {
@@ -205,4 +213,18 @@ button {
 .spinner-border {
   height: 15px;
   width: 15px;
+}
+
+
+.page-item.active .page-link {
+  background-color: $secondary;
+  border: 1px solid transparent;
+}
+
+.page-item .page-link {
+  color: $secondary;
+}
+
+li.pagination-next {
+  margin-left: auto;
 }

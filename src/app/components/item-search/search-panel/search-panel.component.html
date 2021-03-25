@@ -21,14 +21,16 @@
       <h6>Color:</h6>
       <div class="d-flex flex-column mb-3">
         <div class="custom-control custom-radio" *ngFor="let color of colorList">
-          <input formControlName="color" type="radio" [id]="color.value" name="color" [value]="color.value"  class="custom-control-input">
+          <input formControlName="color" type="radio" [id]="color.value" name="color" [value]="color.value"
+                 class="custom-control-input">
           <label class="custom-control-label" [for]="color.value"><small class="text-uppercase">{{color.value}}</small></label>
         </div>
       </div>
       <div class="row no-gutters fit-content mb-3">
         <h6 class="text-primary-app">Genero:</h6>
         <select formControlName="genero" class="custom-select">
-          <option [value]="gender.value" *ngFor="let gender of genderList" class="text-uppercase">{{gender.nombre}}</option>
+          <option [value]="gender.value" *ngFor="let gender of genderList"
+                  class="text-uppercase">{{gender.nombre}}</option>
         </select>
       </div>
       <h6>Ordernar:</h6>
@@ -47,8 +49,10 @@
       <h6 class="text-primary-app mt-3">Tipo:</h6>
       <div class="d-flex flex-column mb-3">
         <div class="custom-control custom-radio" *ngFor="let type of typesList">
-          <input formControlName="tipo" type="radio" [id]="type.value" name="tipo" [value]="type.value" class="custom-control-input">
-          <label class="custom-control-label" [for]="type.value"><small class="text-uppercase">{{type.value}}</small></label>
+          <input formControlName="tipo" type="radio" [id]="type.value" name="tipo" [value]="type.value"
+                 class="custom-control-input">
+          <label class="custom-control-label" [for]="type.value"><small
+            class="text-uppercase">{{type.value}}</small></label>
         </div>
       </div>
       <div class="d-flex w-100">
@@ -62,3 +66,31 @@
     </form>
   </div>
 </div>
+<div class="row no-gutters my-2">
+  <div class="col-xs-12 col-12">
+    <pagination class="custom-pagination"
+      [customPreviousTemplate]="prevTemplate"
+      [customNextTemplate]="nextTemplate"
+      (pageChanged)="pageChanged($event)" [totalItems]="Clothes.length" [itemsPerPage]="itemsPerPage"></pagination>
+  </div>
+</div>
+
+<ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+  <ng-container *ngIf="!disabled">
+    ➡️
+  </ng-container>
+  <ng-container *ngIf="disabled">
+    ⛔
+  </ng-container>
+</ng-template>
+
+
+<ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+  <ng-container *ngIf="!disabled">
+    ⬅️
+  </ng-container>
+  <ng-container *ngIf="disabled">
+    ⛔
+  </ng-container>
+</ng-template>
+
