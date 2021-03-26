@@ -14,7 +14,7 @@
     </button>
   </div>
   <div class="col-12 col-lg-3 pl-lg-3 mb-2 mb-lg-0">
-    <button class="btn btn-block btn-danger rounded-pill" type="button">
+    <button class="btn btn-block btn-danger rounded-pill" type="button" (click)="downloadPdf()">
       Exportar a PDF
     </button>
   </div>
@@ -22,15 +22,20 @@
 <div class="row no-gutters d-flex justify-content-center" *ngIf="listExport && listExport.length === 0">
   <h2 class="inv-text-primary">Seleccione una tabla a listar.</h2>
 </div>
-<table class="table mb-5" *ngIf="listExport">
-  <thead>
-  <tr>
-    <th scope="col" *ngFor="let fields of listFields">{{fields}}</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let item of listExport">
-    <td *ngFor="let field of listFields">{{item[field]}}</td>
-  </tr>
-  </tbody>
-</table>
+<div id="htmlToExport">
+  <div class="row no-gutters" *ngIf="listExport && listExport.length !== 0">
+    <h4 class="inv-text-primary text-uppercase my-3">{{'Listado de ' + this.Form.get('tabla').value}}</h4>
+  </div>
+  <table class="table table-striped mb-5" *ngIf="listExport && listExport.length !== 0">
+    <thead>
+    <tr>
+      <th scope="col" *ngFor="let fields of listFields">{{fields}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of listExport">
+      <td *ngFor="let field of listFields">{{item[field]}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
