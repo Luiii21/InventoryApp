@@ -1,1 +1,36 @@
-<p>item-download works!</p>
+<div class="row no-gutters my-5 d-flex align-items-end">
+  <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+    <form [formGroup]="Form">
+      <h6 class="inv-text-primary">Seleccionar tabla:</h6>
+      <select formControlName="tabla" class="custom-select" (change)="listAttributes()">
+        <option value="productos">Productos</option>
+        <option value="ventas">Ventas</option>
+      </select>
+    </form>
+  </div>
+  <div class="col-12 col-lg-3 pl-lg-3 mb-2 mb-lg-0">
+    <button class="btn btn-block btn-success rounded-pill" type="button" (click)="exportToExcel()">
+      Exportar a Excel
+    </button>
+  </div>
+  <div class="col-12 col-lg-3 pl-lg-3 mb-2 mb-lg-0">
+    <button class="btn btn-block btn-danger rounded-pill" type="button">
+      Exportar a PDF
+    </button>
+  </div>
+</div>
+<div class="row no-gutters d-flex justify-content-center" *ngIf="listExport && listExport.length === 0">
+  <h2 class="inv-text-primary">Seleccione una tabla a listar.</h2>
+</div>
+<table class="table mb-5" *ngIf="listExport">
+  <thead>
+  <tr>
+    <th scope="col" *ngFor="let fields of listFields">{{fields}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of listExport">
+    <td *ngFor="let field of listFields">{{item[field]}}</td>
+  </tr>
+  </tbody>
+</table>
