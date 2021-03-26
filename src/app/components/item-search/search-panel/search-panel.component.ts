@@ -21,7 +21,7 @@ export class SearchPanelComponent implements OnInit {
     {nombre: 'Mujer', value: 'mujer'},
     {nombre: 'Niño', value: 'nino'},
     {nombre: 'Niña', value: 'nina'}];
-  itemsPerPage = 6;
+  itemsPerPage = 9;
 
   constructor(private productoService: ProductoService,
               private fb: FormBuilder) {

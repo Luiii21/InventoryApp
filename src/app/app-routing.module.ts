@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {ItemDownloadModule} from '@components/item-download/item-download.module';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'editar-producto',
     loadChildren: () => import('@components/item-edit/item-edit.module').then(m => m.ItemEditModule)
+  },
+  {
+    path: 'descargar-registros',
+    loadChildren: () => import('@components/item-download/item-download.module').then(m => ItemDownloadModule)
   },
   {
     path: 'registro-producto',
