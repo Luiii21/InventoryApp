@@ -1,1 +1,93 @@
-<p>control-panel works!</p>
+<div class="row no-gutters pt-5">
+  <div class="col-12 col-lg-6">
+    <h4 class="inv-text-primary">Panel de control</h4>
+    <p class="text-secondary">Pestaña para la creación de atributos usados en la pagina.</p>
+    <form [formGroup]="formTienda" class="row no-gutters mb-3 mt-5">
+      <div class="section-label">
+        <h6 class="inv-text-secondary">Registro de tienda</h6>
+        <button class="btn" (click)="listAttributes('atributoTiendas')">
+          <li class="fa fa-eye inv-text-secondary"></li>
+        </button>
+      </div>
+      <div class="form-group custom-form col-12 col-lg-4 pr-lg-1">
+        <label class="custom-col-label text-secondary">ID:</label>
+        <input formControlName="id" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-8 pl-lg-1">
+        <label class="custom-col-label text-secondary">Nombre de tienda:</label>
+        <input formControlName="nombre" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <button (click)="saveAttribute()" [disabled]="formTienda.invalid" class="btn btn-success rounded-pill px-4"
+              type="button">
+        Guardar
+      </button>
+    </form>
+    <form [formGroup]="formTipo" class="row no-gutters mb-3">
+      <div class="section-label">
+        <h6 class="inv-text-secondary">Registro de tipos de producto</h6>
+        <button class="btn" (click)="listAttributes('atributoTipos')">
+          <li class="fa fa-eye inv-text-secondary"></li>
+        </button>
+      </div>
+      <div class="form-group custom-form col-12 col-lg-4 pr-lg-1">
+        <label class="custom-col-label text-secondary">ID:</label>
+        <input formControlName="id" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-4 pl-lg-1">
+        <label class="custom-col-label text-secondary">Nombre:</label>
+        <input formControlName="nombre" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-4 pl-lg-1">
+        <label class="custom-col-label text-secondary">Zona de cuerpo:</label>
+        <select formControlName="cuerpoZona" class="custom-select">
+          <option *ngFor="let part of bodyParts" [value]="part.id">{{part.id}}</option>
+        </select>
+      </div>
+      <button (click)="saveAttribute()" [disabled]="formTipo.invalid" class="btn btn-success rounded-pill px-4"
+              type="button">
+        Guardar
+      </button>
+    </form>
+    <form [formGroup]="formColor" class="row no-gutters mb-3">
+      <div class="section-label">
+        <h6 class="inv-text-secondary">Registro de colores</h6>
+        <button class="btn" (click)="listAttributes('atributoColores')">
+          <li class="fa fa-eye inv-text-secondary"></li>
+        </button>
+      </div>
+      <div class="form-group custom-form col-12 col-lg-4 pr-lg-1">
+        <label class="custom-col-label text-secondary">ID:</label>
+        <input formControlName="id" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <div class="form-group custom-form col-12 col-lg-8 pl-lg-1">
+        <label class="custom-col-label text-secondary">Nombre:</label>
+        <input formControlName="nombre" type="text" class="form-control" aria-label="Número de venta">
+      </div>
+      <button (click)="saveAttribute()" [disabled]="formColor.invalid" class="btn btn-success rounded-pill px-4"
+              type="button">
+        Guardar
+      </button>
+    </form>
+  </div>
+  <div class="col-12 col-lg-6">
+    <h3 class="inv-text-primary">Listado de atributos</h3>
+    <table class="table table-striped mb-5" *ngIf="tableList && tableList.length >0">
+      <thead>
+      <tr>
+        <th scope="col" *ngFor="let fields of tableHeaders">{{fields}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of tableList">
+        <td *ngFor="let field of tableHeaders">{{item[field]}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <span class="mx-auto" *ngIf="statusMessage">
+      <h6 class="my-0 inv-text-secondary">{{statusMessage}}</h6>
+    </span>
+    <span class="mx-auto" *ngIf="statusMessage === null">
+      <h6 class="my-0 inv-text-secondary">Sin atributos a listar</h6>
+    </span>
+  </div>
+</div>
