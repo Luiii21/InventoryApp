@@ -1,3 +1,5 @@
+import {AttributesService} from '@app/services/attributes.service';
+
 export class AtributosModel {
   id ?: string;
   nombre: string;

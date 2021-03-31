@@ -3,8 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductoModel} from '@app/models/producto.model';
 import {ProductoFileModel} from '@app/models/productoFile.model';
 import {ProductoService} from '@app/services/producto.service';
-import {Router} from '@angular/router';
-import {deepEqual} from 'assert';
+import {AttributesService} from '@app/services/attributes.service';
+import {AtributosModel} from '@app/models/atributos.model';
+import {AtributosLoaderModel} from '@app/models/atributosLoader.model';
 
 @Component({
   selector: 'app-item-edit',
@@ -21,13 +22,22 @@ export class ItemEditComponent implements OnInit {
   selectedProduct: ProductoModel = null;
   loadingStatus: string;
   filePicked: string | ArrayBuffer;
+  listTiendas: AtributosModel[] = [];
+  listColores: AtributosModel[] = [];
+  listTipos: AtributosModel[] = [];
+  listGeneros = [];
 
-  constructor(private fb: FormBuilder, private productoService: ProductoService, private router: Router) {
+  constructor(private fb: FormBuilder,
+              private classAttributes: AtributosLoaderModel,
+              private productoService: ProductoService,
+              private serviceAttributes: AttributesService) {
+    this.listGeneros = this.classAttributes.genderList;
   }
 
   ngOnInit(): void {
     this.createForm();
     this.Form.disable();
+    this.initLists();
   }
 
   createForm(): void {
@@ -81,7 +91,6 @@ export class ItemEditComponent implements OnInit {
     const selectedProduct = this.productList.filter(p => p.id === this.editForm.get('productoId').value)[0];
     this.selectedProduct = selectedProduct;
     this.disableImage = false;
-    console.log(selectedProduct);
     this.Form.reset(selectedProduct);
     this.Form.enable();
   }
@@ -143,6 +152,28 @@ export class ItemEditComponent implements OnInit {
       reader.onload = e => this.filePicked = reader.result;
 
       reader.readAsDataURL(file);
+    }
+  }
+
+  private initLists(): void {
+    this.serviceAttributes.listAttributes('atributoColores').subscribe(resp => {
+      this.listColores = resp;
+    });
+    this.serviceAttributes.listAttributes('atributoTiendas').subscribe(resp => {
+      this.listTiendas = resp;
+    });
+    this.serviceAttributes.listAttributes('atributoTipos').subscribe(resp => {
+      this.listTipos = resp;
+    });
+  }
+
+  setCharType(): string {
+    if (this.Form.get('tipo').value) {
+      const list: AtributosModel[] = this.listTipos.filter(i => {
+        return i.id === this.Form.get('tipo').value;
+      });
+
+      return list[0].cuerpoZona;
     }
   }
 

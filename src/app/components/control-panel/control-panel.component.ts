@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AttributesService} from '@app/services/attributes.service';
 import {AtributosModel} from '@app/models/atributos.model';
+import {AtributosLoaderModel} from '@app/models/atributosLoader.model';
 
 @Component({
   selector: 'app-control-panel',
@@ -9,7 +10,7 @@ import {AtributosModel} from '@app/models/atributos.model';
   styleUrls: ['./control-panel.component.scss']
 })
 export class ControlPanelComponent implements OnInit {
-  bodyParts = [{id: 'cabeza'}, {id: 'cuello'}, {id: 'pecho'}, {id: 'manos'}, {id: 'piernas'}, {id: 'pies'}];
+  bodyParts = [];
   statusMessage: string = null;
   formColor: FormGroup;
   formTienda: FormGroup;
@@ -17,7 +18,10 @@ export class ControlPanelComponent implements OnInit {
   tableHeaders: any[];
   tableList: AtributosModel[];
 
-  constructor(private fb: FormBuilder, private serviceAtributos: AttributesService) {
+  constructor(private fb: FormBuilder,
+              private serviceAtributos: AttributesService,
+              private classAttributeLoader: AtributosLoaderModel) {
+    this.bodyParts = this.classAttributeLoader.bodyParts;
   }
 
   ngOnInit(): void {
@@ -27,18 +31,15 @@ export class ControlPanelComponent implements OnInit {
   private formsInit(): void {
     this.formColor = this.fb.group(
       {
-        id: [null, Validators.required],
         nombre: [null, Validators.required]
       }
     );
 
     this.formTienda = this.fb.group({
-      id: [null, Validators.required],
       nombre: [null, Validators.required]
     });
 
     this.formTipo = this.fb.group({
-      id: [null, Validators.required],
       nombre: [null, Validators.required],
       cuerpoZona: [null, Validators.required]
     });
@@ -47,21 +48,21 @@ export class ControlPanelComponent implements OnInit {
   saveAttribute(): void {
     if (this.formColor.valid) {
       const toSaveForm: AtributosModel = {...this.formColor.value};
-      toSaveForm.id.toLowerCase();
       toSaveForm.activo = true;
       this.serviceAtributos.registerAttribute(toSaveForm, 'atributoColores').subscribe();
+      this.formColor.reset();
     }
     if (this.formTienda.valid) {
       const toSaveForm: AtributosModel = {...this.formTienda.value};
-      toSaveForm.id.toLowerCase();
       toSaveForm.activo = true;
       this.serviceAtributos.registerAttribute(toSaveForm, 'atributoTiendas').subscribe();
+      this.formTienda.reset();
     }
     if (this.formTipo.valid) {
       const toSaveForm: AtributosModel = {...this.formTipo.value};
-      toSaveForm.id.toLowerCase();
       toSaveForm.activo = true;
       this.serviceAtributos.registerAttribute(toSaveForm, 'atributoTipos').subscribe();
+      this.formTipo.reset();
     }
   }
 

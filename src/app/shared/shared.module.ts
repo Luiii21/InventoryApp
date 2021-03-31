@@ -19,6 +19,8 @@ import {NgxMaskModule} from 'ngx-mask';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireStorageModule} from 'angularfire2/storage';
+import {AtributosModel} from '@app/models/atributos.model';
+import {AtributosLoaderModel} from '@app/models/atributosLoader.model';
 
 @NgModule({
   declarations: [NavbarComponent, NgDropFilesDirective, OnlyNumbersDirective, OnlyTextDirective],
@@ -41,6 +43,9 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule
+  ],
+  providers: [
+    AtributosLoaderModel
   ]
 })
 export class SharedModule {

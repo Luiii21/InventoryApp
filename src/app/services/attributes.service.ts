@@ -19,6 +19,7 @@ export class AttributesService {
       .pipe(
         map((resp: any) => {
           attribute.id = resp.name;
+          this.updateAttribute(attribute, db).subscribe();
           return attribute;
         })
       );

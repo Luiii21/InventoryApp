@@ -2,45 +2,18 @@
   <div class="col-12 col-lg-8 form">
     <h3 class="inv-text-secondary mb-3">Registrar producto</h3>
     <form class="row no-gutters" [formGroup]="Form" (ngSubmit)="saveProduct()">
-      <div class="col-12 col-lg-6 fit-content">
-        <label class="custom-col-label text-secondary">Escoger tienda</label>
-        <div class="btn-group btn-group-toggle custom-btn-group btn-block" data-toggle="buttons">
-          <label class="btn btn-primary-inv">
-            <input formControlName="tienda"
-                   type="radio"
-                   name="tienda"
-                   id="tienda1"
-                   value="tienda1">
-
-            <i class="fa fa-shopping-basket mr-1"></i>
-            <small class="text-uppercase">Tienda 1</small>
-          </label>
-          <label class="btn btn-primary-inv">
-            <input formControlName="tienda"
-                   type="radio"
-                   name="tienda"
-                   id="tienda2"
-                   value="tienda2">
-            <i class="fa fa-shopping-basket mr-1"></i>
-            <small class="text-uppercase">Tienda 2</small>
-          </label>
-          <label class="btn btn-primary-inv">
-            <input formControlName="tienda"
-                   type="radio"
-                   name="tienda"
-                   id="tienda3"
-                   value="tienda3">
-            <i class="fa fa-shopping-basket mr-1"></i>
-            <small class="text-uppercase">Tienda 3</small>
-          </label>
-        </div>
+      <div class="col-12 col-lg-6 fit-content px-lg-1">
+        <label class="custom-col-label text-secondary">Tienda</label>
+        <select formControlName="tienda" class="custom-select">
+          <option [value]="tienda.id" *ngFor="let tienda of listTiendas"
+                  class="text-uppercase">{{tienda.nombre}}</option>
+        </select>
       </div>
       <div class="col-12 col-lg-4 fit-content px-lg-1">
         <label class="custom-col-label text-secondary">Tipo de producto</label>
         <select formControlName="tipo" class="custom-select">
-          <option value="abrigo">Abrigo</option>
-          <option value="pantalones">Pantalones</option>
-          <option value="zapatos">Zapatos</option>
+          <option [value]="tipo.id" *ngFor="let tipo of listTipos"
+                  class="text-uppercase">{{tipo.nombre}}</option>
         </select>
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
@@ -49,7 +22,8 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-6">
         <label class="custom-col-label text-secondary">Nombre de producto</label>
-        <input formControlName="nombre" type="text" class="form-control" placeholder="*" aria-label="Nombre de producto">
+        <input formControlName="nombre" type="text" class="form-control" placeholder="*"
+               aria-label="Nombre de producto">
       </div>
       <div class="form-group custom-form col-12 col-lg-4 px-lg-1">
         <label class="custom-col-label text-secondary">Marca</label>
@@ -57,44 +31,26 @@
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
         <label class="custom-col-label text-secondary">Stock</label>
-        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*" aria-label="Stock">
+        <input mask="0*" formControlName="stockInicial" type="text" class="form-control" placeholder="*"
+               aria-label="Stock">
       </div>
-      <div class="col-12 col-lg-6 fit-content">
+      <div class="col-12 col-lg-4 fit-content">
         <label class="custom-col-label text-secondary">Genero</label>
-        <div class="btn-group btn-group-toggle custom-btn-group btn-block" data-toggle="buttons">
-          <label class="btn btn-primary-inv">
-            <input formControlName="genero"
-                   type="radio"
-                   name="genero"
-                   id="hombre"
-                   value="hombre">
-
-            <i class="fa fa-male mr-1"></i>
-            <small class="text-uppercase">Hombre</small>
-          </label>
-          <label class="btn btn-primary-inv">
-            <input formControlName="genero"
-                   type="radio"
-                   name="genero"
-                   id="mujer"
-                   value="mujer">
-
-            <i class="fa fa-female mr-1"></i>
-            <small class="text-uppercase">Mujer</small>
-          </label>
-        </div>
+        <select formControlName="genero" class="custom-select">
+          <option [value]="gender.value" *ngFor="let gender of listGeneros" class="text-uppercase">{{gender.nombre}}</option>
+        </select>
       </div>
-      <div class="col-12 col-lg-4 fit-content px-lg-1">
+      <div class="col-12 col-lg-6 fit-content px-lg-1">
         <label class="custom-col-label text-secondary">Color</label>
         <select formControlName="color" class="custom-select">
-          <option value="rojo">Rojo</option>
-          <option value="azul">Azul</option>
-          <option value="verde">Verde</option>
+          <option [value]="color.id" *ngFor="let color of listColores"
+                  class="text-uppercase">{{color.nombre}}</option>
         </select>
       </div>
       <div class="form-group custom-form col-12 col-lg-2">
         <label class="custom-col-label text-secondary">Talla</label>
-        <input [mask]="(Form.get('tipo').value !== 'zapatos' ? 'S*' : '0*')" formControlName="tamano" type="text" class="form-control" placeholder="*" aria-label="Tamaño">
+        <input [mask]="(setCharType() !== 'pies' ? 'S*' : '0*')" formControlName="tamano" type="text"
+               class="form-control" placeholder="*" aria-label="Tamaño">
       </div>
       <div class="col-12 col-lg-4 mt-3">
         <button type="submit" class="btn btn-block btn-success border rounded-pill"

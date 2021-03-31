@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductoService} from '@app/services/producto.service';
 import {ProductoModel} from '@app/models/producto.model';
 import {ProductoFileModel} from '@app/models/productoFile.model';
+import {AtributosModel} from '@app/models/atributos.model';
+import {AttributesService} from '@app/services/attributes.service';
+import {AtributosLoaderModel} from '@app/models/atributosLoader.model';
 
 @Component({
   selector: 'app-item-register',
@@ -11,28 +14,37 @@ import {ProductoFileModel} from '@app/models/productoFile.model';
 })
 export class ItemRegisterComponent implements OnInit {
   Form: FormGroup;
+  filePicked: string | ArrayBuffer;
   imagesFiles: ProductoFileModel[] = [];
   productImage: ProductoFileModel = null;
   loadingStatus: string;
-  filePicked: string | ArrayBuffer;
+  listTiendas: AtributosModel[] = [];
+  listColores: AtributosModel[] = [];
+  listTipos: AtributosModel[] = [];
+  listGeneros = [];
 
-  constructor(private fb: FormBuilder, private productoService: ProductoService) {
+  constructor(private fb: FormBuilder,
+              private classAttributes: AtributosLoaderModel,
+              private productoService: ProductoService,
+              private serviceAttributes: AttributesService) {
+    this.listGeneros = this.classAttributes.genderList;
   }
 
   ngOnInit(): void {
     this.createForm();
+    this.initLists();
   }
 
   createForm(): void {
     this.Form = this.fb.group(
       {
-        tienda: [null, [Validators.required, Validators.min(1), Validators.max(3)]],
-        tipo: [null, Validators.required],
+        tienda: [{value: null, disabled: true}, [Validators.required, Validators.min(1), Validators.max(3)]],
+        tipo: [{value: null, disabled: true}, Validators.required],
         precio: [null, [Validators.required, Validators.minLength(1)]],
         nombre: [null, [Validators.required, Validators.minLength(5)]],
         marca: [null, [Validators.required]],
         genero: [null, [Validators.required]],
-        color: [null, [Validators.required]],
+        color: [{value: null, disabled: true}, [Validators.required]],
         tamano: [null, [Validators.required]],
         stockInicial: [null, [Validators.required, Validators.min(1)]],
         disponibilidad: [true],
@@ -85,6 +97,31 @@ export class ItemRegisterComponent implements OnInit {
       reader.onload = e => this.filePicked = reader.result;
 
       reader.readAsDataURL(file);
+    }
+  }
+
+  private initLists(): void {
+    this.serviceAttributes.listAttributes('atributoColores').subscribe(resp => {
+      this.listColores = resp;
+      this.Form.get('color').enable();
+    });
+    this.serviceAttributes.listAttributes('atributoTiendas').subscribe(resp => {
+      this.listTiendas = resp;
+      this.Form.get('tienda').enable();
+    });
+    this.serviceAttributes.listAttributes('atributoTipos').subscribe(resp => {
+      this.listTipos = resp;
+      this.Form.get('tipo').enable();
+    });
+  }
+
+  setCharType(): string {
+    if (this.Form.get('tipo').value) {
+      const list: AtributosModel[] = this.listTipos.filter(i => {
+        return i.id === this.Form.get('tipo').value;
+      });
+
+      return list[0].cuerpoZona;
     }
   }
 
